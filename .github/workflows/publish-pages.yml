@@ -34,7 +34,7 @@ jobs:
 
   deploy:
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch' ) && github.ref == 'refs/heads/main'
-    needs: build
+    needs: upload
     name: Deploy site to GitHub Pages
     runs-on: ubuntu-latest
     environment:
