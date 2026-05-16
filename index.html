@@ -12,19 +12,64 @@
     <div id="main-content">
         <p>
             Welcome to the <em>Queen and Widow</em>.
+            Have a seat.
         </p>
-        <h2>Games</h2>
+        <h2>Play a game</h2>
+        <p>
+            There are some games to enjoy while you are here.
+            They are all trick-taking games, played with traditional packs of cards.
+            You play with robot opponents, whose quality varies depending on the game,
+            but generally falls somewhere around 'semi-competent beginner'.
+            They will generally be pretty beatable on average, once you know what you are doing.
+        </p>
+        <h3>The games</h3>
         <ul>
             <li>
-                <a href="https://adbond.github.io/havilering/">Havilering</a>
+                <a href="https://adbond.github.io/havilering/"><em>Havilering</em></a> is a four-player partnership game.
+                There is no overall trump suit, with instead the preferential suit in a trick
+                being determined by a non-transitive cycle á la Paper-Scissors-Stone,
+                which creates some unique tactics for winning tricks.
+                Points are scored based on the combination of cards contained inside,
+                in similar style to Cribbage, so that, winning or losing,
+                cards often need to be selected with great care.
             </li>
             <li>
-                <a href="https://adbond.github.io/pippins/">Pippins Aplenty</a>
+                <a href="https://adbond.github.io/pippins/"><em>Pippins Aplenty</em></a> is another partnership game.
+                The suits exist in a hierarchy varying across the hand &mdash; with each trick,
+                the lowest card played above the highest in the current hierarchy sets the new top trump suit.
+                It also defines the threshold for cards scoring &mdash;
+                cards below this score based on how low they are in the hierarchy,
+                and cards above score nothing, so later tricks tend to score more than earlier.
             </li>
             <li>
-                <a href="https://adbond.github.io/scalade/">Scalade</a>
+                <a href="https://adbond.github.io/scalade/"><em>Scalade</em></a> is a cut-throat game for three.
+                Each suit has a 'ladder' associated, with a face-up card of that suit representing its current 'rung'. Any trick containing the next rung up of any suit pushes the ladder up to the new rung, with the winner of the trick taking control of it.
+                The trump suit varies from trick to trick, set by the ladder with the lowest rung,
+                and points are scored by having control of ladders at the hand's end,
+                with bonuses for keeping suits in consecutive hands.
+            </li>
+            <li>
+                <em>Sussex Tarot</em> is in development...
             </li>
         </ul>
+        <h3>Implementation notes</h3>
+        <p>
+            All implementations run entirely in the browser.
+            That means that, once the game is loaded,
+            you do not need an active internet connexion to continue to play &mdash;
+            all computation is happening on your device.
+        </p>
+        <p>
+            Some game data is collected.
+            There is no personal data collected of any sort, or any cookies used.
+            All data is purely in terms of the move played.
+            Unavailability of an internet connexion to upload the data should not affect your ability to play.
+        </p>
+        <p>
+            The games may experience errors or bugs. If so please report in the relevant GitHub repository.
+        </p>
+
+        
     </div>
 </body>
 
