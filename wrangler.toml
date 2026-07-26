@@ -1,0 +1,5 @@
+name = "queen-and-widow"
+compatibility_date = "2026-07-26"
+
+[assets]
+directory = "./site"
