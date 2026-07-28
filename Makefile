@@ -9,6 +9,12 @@ OUT_DIR   := site/$(BASE_PATH)
 
 all: clone build
 
+clean:
+	rm -rf site
+
+clean-deps:
+	rm -rf deps
+
 clone:
 	@mkdir -p deps
 	@for entry in $(REPOS); do \
@@ -20,7 +26,7 @@ clone:
 	  fi; \
 	done
 
-build:
+build: clean
 	cp -r src site
 # 	TODO: do we need more than just vite build?
 	@for entry in $(REPOS); do \
@@ -34,8 +40,3 @@ build:
 serve: all
 	npx http-server site
 
-clean:
-	rm -rf dist
-
-clean-deps:
-	rm -rf deps
