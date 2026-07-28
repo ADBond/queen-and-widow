@@ -3,7 +3,7 @@ REPOS := \
   "https://github.com/ADBond/havilering.git::havilering"
 
 BASE_PATH := games
-OUT_DIR   := dist/$(BASE_PATH)
+OUT_DIR   := site/$(BASE_PATH)
 
 .PHONY: all clone build clean serve clean-deps
 
@@ -21,7 +21,7 @@ clone:
 	done
 
 build:
-	cp -r src dist
+	cp -r src site
 # 	TODO: do we need more than just vite build?
 	@for entry in $(REPOS); do \
 	  name=$${entry##*::}; \
@@ -32,7 +32,7 @@ build:
 	done
 
 serve: all
-	npx http-server dist
+	npx http-server site
 
 clean:
 	rm -rf dist
