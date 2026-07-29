@@ -3,12 +3,16 @@ body {
 }
 
 #main-content {
-    position: fixed;
+    position: absolute;
     background-color: rgba(255, 255, 255, 0.93);
     left: 10%;
     top: 10%;
     width: 80%;
-    height: 80%;
     border-radius: 10px;
     padding: 20px;
+}
+
+#build-info {
+    color: #880000;
+    font-style: italic;
 }

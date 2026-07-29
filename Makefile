@@ -5,6 +5,7 @@ REPOS := \
 
 BASE_PATH := games
 OUT_DIR   := site/$(BASE_PATH)
+DATE      := $(shell ./formatted_date.sh)
 
 .PHONY: all clone build clean serve clean-deps
 
@@ -29,6 +30,8 @@ clone:
 
 build: clean
 	cp -r src site
+	sed -i -e "s/__BUILD_TIME__/$(DATE)/g" site/index.html
+
 # 	TODO: do we need more than just vite build?
 	@for entry in $(REPOS); do \
 	  name=$${entry##*::}; \
