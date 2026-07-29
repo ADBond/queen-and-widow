@@ -1,13 +1,14 @@
 # TODO pin
 REPOS := \
-  "https://github.com/ADBond/havilering.git::havilering"
+  "https://github.com/ADBond/havilering.git::havilering" \
+  "https://github.com/ADBond/scalade.git::scalade" \
 
 BASE_PATH := games
 OUT_DIR   := site/$(BASE_PATH)
 
 .PHONY: all clone build clean serve clean-deps
 
-all: clone build
+all: clean clone build
 
 clean:
 	rm -rf site
@@ -37,6 +38,6 @@ build: clean
 	      --outDir=../../$(OUT_DIR)/$$name --emptyOutDir ); \
 	done
 
-serve: all
+serve:
 	npx http-server site
 
