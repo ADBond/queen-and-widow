@@ -2,6 +2,7 @@
 REPOS := \
   "https://github.com/ADBond/havilering.git::havilering" \
   "https://github.com/ADBond/scalade.git::scalade" \
+  "https://github.com/ADBond/calypso.git::calypso" \
 
 BASE_PATH := games
 OUT_DIR   := site/$(BASE_PATH)
