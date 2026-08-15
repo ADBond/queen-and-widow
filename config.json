@@ -3,18 +3,18 @@
         "name": "havilering",
         "url": "https://github.com/ADBond/havilering.git",
         "branch": "main",
-        "sha": ""
+        "sha": "4989d50174be89bea2d7c50cb458890d46ef92a1"
     },
     {
         "name": "scalade",
         "url": "https://github.com/ADBond/scalade.git",
         "branch": "main",
-        "sha": ""
+        "sha": "3b76fdc216a7e1291d22b2575e0693662a0aa622"
     },
     {
         "name": "calypso",
         "url": "https://github.com/ADBond/calypso.git",
         "branch": "main",
-        "sha": ""
+        "sha": "8b11334df2a71f7d28d9753ec196adf77df16350"
     }
 ]
