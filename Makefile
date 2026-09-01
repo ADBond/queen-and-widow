@@ -21,7 +21,6 @@ build: clean
 	sed -i -e "s/__BUILD_TIME__/$(DATE)/g" site/index.html
 	python3 build_modules.py $(REPOS_JSON) $(BASE_PATH) $(OUT_DIR)
 
-
 serve:
 	npx http-server site
 

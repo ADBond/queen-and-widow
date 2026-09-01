@@ -16,5 +16,11 @@
         "url": "https://github.com/ADBond/calypso.git",
         "branch": "main",
         "sha": "66eeb4bb86fbf8b30a20d99d217dc9e524c308a2"
+    },
+    {
+        "name": "witan",
+        "url": "https://github.com/ADBond/witan.git",
+        "branch": "main",
+        "sha": "e707602e1867d0d77b83174e7bc7eeb61651fa11"
     }
 ]
