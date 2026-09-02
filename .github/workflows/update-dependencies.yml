@@ -45,7 +45,8 @@ jobs:
             echo "::group::$name: $old_sha -> $new_sha"
             pr_branch="bump/${name}"
 
-            git checkout main
+            git fetch origin main
+            git checkout -B main origin/main
             git pull origin main
 
             if git ls-remote --exit-code --heads origin "$pr_branch" >/dev/null 2>&1; then
