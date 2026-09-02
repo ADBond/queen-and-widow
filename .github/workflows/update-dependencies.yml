@@ -30,7 +30,7 @@ jobs:
         run: |
           ./update_deps.sh | tee /tmp/changed.txt
           # we only wanted to detect changes here, not keep them on main's working tree
-          git checkout -- watched-repos.json
+          git checkout -- config.json
           if [ -s /tmp/changed.txt ]; then
             echo "any=true" >> "$GITHUB_OUTPUT"
           else
@@ -90,7 +90,7 @@ jobs:
 
             # Derive owner/repo from the URL for a compare link, e.g.
             # https://github.com/your-org/A.git -> your-org/A
-            url=$(jq -r --arg n "$name" '.[] | select(.name==$n) | .url' watched-repos.json)
+            url=$(jq -r --arg n "$name" '.[] | select(.name==$n) | .url' config.json)
             repo_path=$(echo "$url" | sed -E 's#^https://github.com/##; s#\.git$##')
             compare_url="https://github.com/${repo_path}/compare/${old_sha}...${new_sha}"
 
