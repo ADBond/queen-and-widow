@@ -1,0 +1,104 @@
+name: Update dependency repo refs
+
+on:
+  schedule:
+    - cron: "12 06,18 * * *"
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  check:
+    permissions: {}
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        id: checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: Set git credentials
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Detect changed repos
+        id: detect_changes
+        run: |
+          ./update_deps.sh | tee /tmp/changed.txt
+          # we only wanted to detect changes here, not keep them on main's working tree
+          git checkout -- watched-repos.json
+          if [ -s /tmp/changed.txt ]; then
+            echo "any=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "any=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update per-repo branches
+        id: update_branches_per_dependent
+        if: steps.detect_changes.outputs.any == 'true'
+        run: |
+          while read -r name old_sha new_sha; do
+            echo "::group::$name: $old_sha -> $new_sha"
+            pr_branch="bump/${name}"
+
+            git checkout main
+            git pull origin main
+
+            if git ls-remote --exit-code --heads origin "$pr_branch" >/dev/null 2>&1; then
+              git fetch origin "$pr_branch"
+              git checkout -B "$pr_branch" "origin/$pr_branch"
+              git merge main --no-edit
+            else
+              git checkout -B "$pr_branch" main
+            fi
+
+            ./update_deps.sh --only "$name"
+
+            if git diff --quiet; then
+              echo "No effective change on $pr_branch (already up to date), skipping commit"
+              echo "::endgroup::"
+              continue
+            fi
+
+            git add config.json
+            git commit -m "Bump $name to ${new_sha:0:7}"
+            git push -u origin "$pr_branch"
+            echo "::endgroup::"
+          done < /tmp/changed.txt
+
+      - name: Open pull requests where needed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          while read -r name old_sha new_sha; do
+            pr_branch="bump/${name}"
+
+            if ! git ls-remote --exit-code --heads origin "$pr_branch" >/dev/null 2>&1; then
+              echo "No branch pushed for $name, skipping PR"
+              continue
+            fi
+
+            existing=$(gh pr list --head "$pr_branch" --state open --json number --jq 'length')
+            if [ "$existing" -gt 0 ]; then
+              echo "PR already open for $name, nothing to do"
+              continue
+            fi
+
+            # Derive owner/repo from the URL for a compare link, e.g.
+            # https://github.com/your-org/A.git -> your-org/A
+            url=$(jq -r --arg n "$name" '.[] | select(.name==$n) | .url' watched-repos.json)
+            repo_path=$(echo "$url" | sed -E 's#^https://github.com/##; s#\.git$##')
+            compare_url="https://github.com/${repo_path}/compare/${old_sha}...${new_sha}"
+
+            gh pr create \
+              --base main \
+              --head "$pr_branch" \
+              --title "Bump $name to ${new_sha:0:7}" \
+              --body "Detected new commit on \`$name\`.
+
+            Diff: ${compare_url}"
+          done < /tmp/changed.txt
