@@ -46,7 +46,7 @@ for i in $(seq 0 $((count - 1))); do
   jq --arg i "$i" --arg sha "$new_sha" '.[$i|tonumber].sha = $sha' "$tmp" > "${tmp}.next"
   mv "${tmp}.next" "$tmp"
 
-  echo "Updated $name from $old_sha to $new_sha"
+  echo "$name $old_sha $new_sha"
 done
 
 mv "$tmp" "$FILE"
