@@ -17,8 +17,6 @@ jobs:
       - name: Checkout code
         id: checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-        with:
-          persist-credentials: false
 
       - name: Set git credentials
         run: |
@@ -30,7 +28,7 @@ jobs:
         run: |
           ./update_deps.sh | tee /tmp/changed.txt
           # we only wanted to detect changes here, not keep them on main's working tree
-          git checkout -- watched-repos.json
+          git checkout -- config.json
           if [ -s /tmp/changed.txt ]; then
             echo "any=true" >> "$GITHUB_OUTPUT"
           else
@@ -45,7 +43,8 @@ jobs:
             echo "::group::$name: $old_sha -> $new_sha"
             pr_branch="bump/${name}"
 
-            git checkout main
+            git fetch origin main
+            git checkout -B main origin/main
             git pull origin main
 
             if git ls-remote --exit-code --heads origin "$pr_branch" >/dev/null 2>&1; then
@@ -90,7 +89,7 @@ jobs:
 
             # Derive owner/repo from the URL for a compare link, e.g.
             # https://github.com/your-org/A.git -> your-org/A
-            url=$(jq -r --arg n "$name" '.[] | select(.name==$n) | .url' watched-repos.json)
+            url=$(jq -r --arg n "$name" '.[] | select(.name==$n) | .url' config.json)
             repo_path=$(echo "$url" | sed -E 's#^https://github.com/##; s#\.git$##')
             compare_url="https://github.com/${repo_path}/compare/${old_sha}...${new_sha}"
 
