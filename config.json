@@ -22,5 +22,11 @@
     "url": "https://github.com/ADBond/witan.git",
     "branch": "main",
     "sha": "7e24299a06b1087ebd188c60d9a51df39e1f5d79"
+  },
+  {
+    "name": "pippins-aplenty",
+    "url": "https://github.com/ADBond/pippins.git",
+    "branch": "main",
+    "sha": "9d4aa0d1996ae945ae924af05613999d6da99b75"
   }
 ]
