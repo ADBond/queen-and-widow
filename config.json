@@ -9,7 +9,7 @@
     "name": "scalade",
     "url": "https://github.com/ADBond/scalade.git",
     "branch": "main",
-    "sha": "3b76fdc216a7e1291d22b2575e0693662a0aa622"
+    "sha": "edad6ed90f74151fec0707f4d1407231e0daca77"
   },
   {
     "name": "calypso",
@@ -21,6 +21,12 @@
     "name": "witan",
     "url": "https://github.com/ADBond/witan.git",
     "branch": "main",
-    "sha": "3c1d9d38b13cf211f2cba32e60729e9c45a65dcf"
+    "sha": "7e24299a06b1087ebd188c60d9a51df39e1f5d79"
+  },
+  {
+    "name": "pippins-aplenty",
+    "url": "https://github.com/ADBond/pippins.git",
+    "branch": "main",
+    "sha": "9d4aa0d1996ae945ae924af05613999d6da99b75"
   }
 ]
